@@ -27,13 +27,23 @@ revenue <- companies_finances$Revenue
 
 linear_model <- lm(revenue ~ spend)
 
+pdf("export/regression-diagnostic-plots-with-leverage-point.pdf")
+
+par(mfrow = c(2, 2))
+
+plot(linear_model)
+
+dev.off()
+
+linear_model <- lm(revenue[-257] ~ spend[-257])
+
 predict(linear_model, data.frame(spend = 500000), interval = "predict")
 predict(linear_model, data.frame(spend = 500000), interval = "confidence")
 
 predict(linear_model, data.frame(spend = 700000), interval = "predict")
 predict(linear_model, data.frame(spend = 700000), interval = "confidence")
 
-pdf("export/regression-diagnostic-plots.pdf")
+pdf("export/regression-diagnostic-plots-without-leverage-point.pdf")
 
 par(mfrow = c(2, 2))
 
