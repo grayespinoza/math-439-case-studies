@@ -1,0 +1,19 @@
+---
+x-defaults: &defaults
+  cap_drop:
+    - ALL
+  security_opt:
+    - no-new-privileges:true
+services:
+  r:
+    <<: *defaults
+    build: .
+    volumes:
+      - .:/data
+    command:
+      - bash
+      - -c
+      - |
+        Rscript -e "styler::style_dir()"
+        Rscript -e "lintr::lint_dir()"
+        Rscript scripts/439-case-study-1.R
