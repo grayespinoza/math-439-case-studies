@@ -17,3 +17,20 @@ services:
         Rscript -e "styler::style_dir()"
         Rscript -e "lintr::lint_dir()"
         Rscript scripts/439-case-study-1.R
+  typstyle:
+    <<: *defaults
+    image: grayespinoza/typstyle:v0.14.4
+    working_dir: /work
+    volumes:
+      - .:/work
+    command:
+      - presentations/439-case-study-1.typ
+  typst:
+    <<: *defaults
+    image: ghcr.io/typst/typst:0.15.1
+    working_dir: /work
+    volumes:
+      - .:/work
+    command:
+      - compile
+      - presentations/439-case-study-1.typ
